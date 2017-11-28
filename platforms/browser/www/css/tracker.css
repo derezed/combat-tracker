@@ -1,0 +1,27 @@
+.nav-wrapper .brand-logo{
+  float: left;
+  left: 29%;
+}
+.container .row{
+  margin-bottom: 0;
+}
+.container .row:last-of-type{
+  margin-bottom: .5rem;
+}
+.container .row .card{
+  margin-bottom: 0;
+}
+.container .row .card .card-content{
+  overflow: auto;
+  padding: 12px;
+}
+.container .row .card .card-content .card-content-info{
+  float: left;
+}
+.container .row .card .card-content .card-content-controls{
+  float: right;
+}
+.container .row .card .card-content .card-content-controls .cancel-btn{
+  font-size: 36px;
+  margin-top: 12px;
+}

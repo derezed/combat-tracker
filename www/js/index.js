@@ -47,13 +47,19 @@ var app = {
 
       var steps = [
         {
-          title: 'Player or Creature Name:'
+          title: 'Player or Creature Name:',
+          input: 'text',
+          focusConfirm: 'false'
         },
         {
-          title: 'Initiative Rolle:'
+          title: 'Initiative Roll:',
+          input: 'number',
+          focusConfirm: 'false'
         },
         {
-          title: 'Modifier:'
+          title: 'Modifier:',
+          input: 'number',
+          focusConfirm: 'false'
         }
       ]
 
@@ -80,11 +86,33 @@ var app = {
 
           var div = document.createElement('div');
           div.className = 'row';
+          div.setAttribute('data-initiative',totalIni);
           div.innerHTML = playerCard;
 
           var container = document.getElementById('cardsContainer');
           container.appendChild(div);
         }
-      })
-    }
+        app.shuffleCards();
+      });
+    },
+    shuffleCards: function(){
+      var cardsToShuffle = document.getElementsByClassName('row');
+      if(cardsToShuffle.length > 1){
+        var cards = [];
+        for (var i = 0; i < cardsToShuffle.length; i++){
+          cards.push(cardsToShuffle[i]);
+        }
+        cards.sort(function(a,b){
+          return b.getAttribute('data-initiative') - a.getAttribute('data-initiative');
+        });
+
+        var container = document.getElementById('cardsContainer')
+        container.innerHTML = '';
+
+        cards.forEach(function(el){
+          container.appendChild(el);
+        });
+
+      }
+    },
 };

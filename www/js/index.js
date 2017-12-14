@@ -20,16 +20,39 @@ var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
+        setTimeout( this.testData,500 );
     },
+
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-        var addPlayers = document.getElementsByClassName('btn-add-player')[0];
-        addPlayers.addEventListener('click', this.addPlayer, false);
+        $(document).on('deviceready',this.onDeviceReady);
+        $('nav').on('click','.btn-add-player',this.addPlayer);
+        $('#cardContainer').on('click','i.cancel-btn',this.removePlayer);
     },
+
+    testData: function(){
+      var result = {
+        value: ['Trevor','10','5']
+      };
+
+      app.createPlayerCard(result);
+
+      var result2 = {
+        value: ['Kevin','15','5']
+      };
+
+      app.createPlayerCard(result2);
+
+      var result3 = {
+        value: ['Matt','20','5']
+      };
+
+      app.createPlayerCard(result3);
+    },
+
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
@@ -37,6 +60,7 @@ var app = {
     onDeviceReady: function() {
 
     },
+
     addPlayer: function(){
       swal.setDefaults({
         input: 'text',
@@ -65,35 +89,38 @@ var app = {
 
       swal.queue(steps).then((result) => {
         swal.resetDefaults()
-
-        if (result.value) {
-          var playerName = result.value[0];
-          var totalIni = parseInt(result.value[1]) + parseInt(result.value[2]);
-
-          var playerCard = '<div class="col s12 m6">\
-              <div class="card blue-grey darken-1">\
-                <div class="card-content white-text">\
-                  <div class="card-content-info">\
-                    <span class="card-title">'+result.value[0]+'</span>\
-                    <p>Total: '+totalIni+', Roll: '+result.value[1]+', Mod: '+result.value[2]+'</p>\
-                  </div>\
-                  <div class="card-content-controls">\
-                    <i class="material-icons cancel-btn">cancel</i>\
-                  </div>\
-                </div>\
-              </div>\
-            </div>';
-
-          var div = document.createElement('div');
-          div.className = 'row';
-          div.setAttribute('data-initiative',totalIni);
-          div.innerHTML = playerCard;
-
-          var container = document.getElementById('cardsContainer');
-          container.appendChild(div);
-        }
-        app.shuffleCards();
+        app.createPlayerCard(result);
       });
+    },
+
+    createPlayerCard: function(result){
+      var totalIni = parseInt(result.value[1]) + parseInt(result.value[2]);
+
+      var playerCard = '<div class="col s12 m6">\
+          <div class="card blue-grey darken-1">\
+            <div class="card-content white-text">\
+              <div class="card-content-info">\
+                <span class="card-title">'+result.value[0]+'</span>\
+                <p>Total: '+totalIni+', Roll: '+result.value[1]+', Mod: '+result.value[2]+'</p>\
+              </div>\
+              <div class="card-content-controls">\
+                <i class="material-icons cancel-btn">cancel</i>\
+              </div>\
+            </div>\
+          </div>\
+        </div>';
+
+      var div = document.createElement('div');
+      div.className = 'row';
+      div.setAttribute('data-initiative',totalIni);
+      div.innerHTML = playerCard;
+
+
+      var container = document.getElementById('cardContainer');
+      container.appendChild(div);
+
+      //app.addRemoveListeners();
+      app.shuffleCards();
     },
     shuffleCards: function(){
       var cardsToShuffle = document.getElementsByClassName('row');
@@ -106,7 +133,7 @@ var app = {
           return b.getAttribute('data-initiative') - a.getAttribute('data-initiative');
         });
 
-        var container = document.getElementById('cardsContainer')
+        var container = document.getElementById('cardContainer')
         container.innerHTML = '';
 
         cards.forEach(function(el){
@@ -114,5 +141,9 @@ var app = {
         });
 
       }
+    },
+
+    removePlayer: function(){
+      console.log('clicked');
     },
 };

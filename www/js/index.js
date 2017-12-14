@@ -110,20 +110,16 @@ var app = {
           </div>\
         </div>';
 
-      var div = document.createElement('div');
-      div.className = 'row';
-      div.setAttribute('data-initiative',totalIni);
-      div.innerHTML = playerCard;
+      var $div = $("<div>", {'class': 'row','data-initiative': totalIni});
+      $div.append(playerCard);
 
+      var container = $('#cardContainer');
+      container.append($div);
 
-      var container = document.getElementById('cardContainer');
-      container.appendChild(div);
-
-      //app.addRemoveListeners();
       app.shuffleCards();
     },
     shuffleCards: function(){
-      var cardsToShuffle = document.getElementsByClassName('row');
+      var cardsToShuffle = $('.row');
       if(cardsToShuffle.length > 1){
         var cards = [];
         for (var i = 0; i < cardsToShuffle.length; i++){
@@ -133,11 +129,11 @@ var app = {
           return b.getAttribute('data-initiative') - a.getAttribute('data-initiative');
         });
 
-        var container = document.getElementById('cardContainer')
-        container.innerHTML = '';
+        var container = $('#cardContainer');
+        container.empty();
 
         cards.forEach(function(el){
-          container.appendChild(el);
+          container.append(el);
         });
 
       }

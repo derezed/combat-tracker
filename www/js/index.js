@@ -144,6 +144,9 @@ var app = {
     },
 
     removePlayer: function(){
-      console.log('clicked');
+      var playerCard = $(this).closest('.row');
+      playerCard.slideUp(500, function(){
+        $(this).remove();
+      });
     },
 };

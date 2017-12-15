@@ -5,6 +5,9 @@
 .container .row{
   margin-bottom: 0;
 }
+.container .row.hidden{
+  display: none;
+}
 .container .row:last-of-type{
   margin-bottom: .5rem;
 }

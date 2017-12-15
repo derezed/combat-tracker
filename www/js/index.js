@@ -31,7 +31,7 @@ var app = {
         $(document).on('deviceready',this.onDeviceReady);
         $('nav').on('click','.btn-add-player',this.addPlayer);
         $('#cardContainer').on('click','i.cancel-btn',this.removePlayer);
-        
+        $('#cardContainer').on('click','i.edit-btn',this.editPlayer);
     },
 
     testData: function(){
@@ -86,10 +86,10 @@ var app = {
           input: 'number',
           focusConfirm: 'false'
         }
-      ]
+      ];
 
       swal.queue(steps).then((result) => {
-        swal.resetDefaults()
+        swal.resetDefaults();
         app.createPlayerCard(result);
       });
     },
@@ -102,7 +102,7 @@ var app = {
             <div class="card-content white-text">\
               <div class="card-content-info">\
                 <span class="card-title">'+result.value[0]+'</span>\
-                <p>Total: '+totalIni+', Roll: '+result.value[1]+', Mod: '+result.value[2]+'</p>\
+                <p>Total: <span class="totalIni">'+totalIni+'</span>, Roll: <span class="baseRoll">'+result.value[1]+'</span>, Mod: <span class="mod">'+result.value[2]+'</span></p>\
               </div>\
               <div class="card-content-controls">\
                 <i class="material-icons edit-btn">edit</i>\
@@ -120,6 +120,7 @@ var app = {
 
       app.shuffleCards();
     },
+
     shuffleCards: function(){
       var cardsToShuffle = $('.row');
       if(cardsToShuffle.length > 1){
@@ -146,5 +147,58 @@ var app = {
       playerCard.slideUp(500, function(){
         $(this).remove();
       });
+    },
+
+    editPlayer: function(){
+      var card = $(this).closest('.row');
+      var cardContentInfo = card.find('.card-content-info');
+      var player = cardContentInfo.find('.card-title').text();
+      var baseRoll = cardContentInfo.find('.baseRoll').text();
+      var mod = cardContentInfo.find('.mod').text();
+
+      swal.setDefaults({
+        input: 'text',
+        confirmButtonText: 'Next &rarr;',
+        showCancelButton: true,
+        progressSteps: ['1', '2', '3']
+      });
+
+      var steps = [
+        {
+          title: 'Player or Creature Name:',
+          input: 'text',
+          inputValue: player,
+          focusConfirm: 'false'
+        },
+        {
+          title: 'Initiative Roll:',
+          input: 'number',
+          inputValue: baseRoll,
+          focusConfirm: 'false'
+        },
+        {
+          title: 'Modifier:',
+          input: 'number',
+          inputValue: mod,
+          focusConfirm: 'false'
+        }
+      ];
+
+      swal.queue(steps).then((result) => {
+        swal.resetDefaults();
+        app.updatePlayerInfo(card,result);
+      });
+    },
+
+    updatePlayerInfo: function(card,result){
+      var totalIni = parseInt(result.value[1]) + parseInt(result.value[2]);
+      var cardContent = card.find('.card-content-info');
+      card.attr('data-initiative',totalIni);
+      cardContent.find('.card-title').text(result.value[0]);
+      cardContent.find('.totalIni').text(totalIni);
+      cardContent.find('.baseRoll').text(result.value[1]);
+      cardContent.find('mod').text(result.value[2]);
+
+      app.shuffleCards();
     },
 };

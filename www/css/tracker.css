@@ -32,3 +32,33 @@
   margin-top: 12px;
   cursor: crosshair;
 }
+nav{
+  background-color: #3B7DDC !important;
+}
+.brand-logo{
+  color: #fff !important;
+}
+.container .row .card{
+  background-color: #3B7DDC !important;
+}
+.swal2-title, .swal2-progresscircle .swal2-activeprogressstep,.swal2-progresscircle {
+  font-family: "Roboto", sans-serif !important;
+}
+.swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep, .swal2-progressline, .swal2-progresssteps .swal2-progresscircle, .swal2-popup .swal2-styled{
+  background: #3B7DDC !important;
+}
+.swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep ~ .swal2-progressline, .swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep ~ .swal2-progresscircle, .swal2-cancel .swal2-styled{
+  background: #80A8E2 !important;
+}
+input[type=text]:not(.browser-default), input[type=number]:not(.browser-default){
+  font-size: 2rem !important;
+  font-family: "Roboto", sans-serif !important;
+}
+input[type=text]:not(.browser-default):focus:not([readonly]),input[type=number]:not(.browser-default):focus:not([readonly]){
+  border-bottom: 1px solid #18498F !important;
+  -webkit-box-shadow: 0 1px 0 0 #18498F !important;
+  box-shadow: 0 1px 0 0 #18498F !important;
+}
+.swal2-popup .swal2-input[type='number']{
+  margin: 0 auto;
+}

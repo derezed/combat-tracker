@@ -104,7 +104,6 @@ var app = {
     },
 
     preventFocus: function(){
-      console.log('prevent');
       $('.swal2-container .swal2-modal').focus();
     },
 

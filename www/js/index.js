@@ -74,17 +74,26 @@ var app = {
         {
           title: 'Player or Creature Name:',
           input: 'text',
-          focusConfirm: 'false'
+          focusCancel: true,
+          onOpen: () => {
+            app.preventFocus()
+          }
         },
         {
           title: 'Initiative Roll:',
           input: 'number',
-          focusConfirm: 'false'
+          focusCancel: true,
+          onOpen: () => {
+            app.preventFocus()
+          }
         },
         {
           title: 'Modifier:',
           input: 'number',
-          focusConfirm: 'false'
+          focusCancel: true,
+          onOpen: () => {
+            app.preventFocus()
+          }
         }
       ];
 
@@ -92,6 +101,11 @@ var app = {
         swal.resetDefaults();
         app.createPlayerCard(result);
       });
+    },
+
+    preventFocus: function(){
+      console.log('prevent');
+      $('.swal2-container .swal2-modal').focus();
     },
 
     createPlayerCard: function(result){
@@ -115,11 +129,7 @@ var app = {
       var $div = $("<div>", {'class': 'row hidden','data-initiative': totalIni});
       $div.append(playerCard);
 
-      //var container = $('#cardContainer');
-      //container.append($div);
-
       app.addCard($div);
-      //app.shuffleCards();
     },
 
     shuffleCards: function(){
@@ -176,19 +186,28 @@ var app = {
           title: 'Player or Creature Name:',
           input: 'text',
           inputValue: player,
-          focusConfirm: 'false'
+          focusConfirm: 'true',
+          onOpen: () => {
+            app.preventFocus()
+          }
         },
         {
           title: 'Initiative Roll:',
           input: 'number',
           inputValue: baseRoll,
-          focusConfirm: 'false'
+          focusConfirm: 'true',
+          onOpen: () => {
+            app.preventFocus()
+          }
         },
         {
           title: 'Modifier:',
           input: 'number',
           inputValue: mod,
-          focusConfirm: 'false'
+          focusConfirm: 'true',
+          onOpen: () => {
+            app.preventFocus()
+          }
         }
       ];
 

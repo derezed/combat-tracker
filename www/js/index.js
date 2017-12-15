@@ -31,6 +31,7 @@ var app = {
         $(document).on('deviceready',this.onDeviceReady);
         $('nav').on('click','.btn-add-player',this.addPlayer);
         $('#cardContainer').on('click','i.cancel-btn',this.removePlayer);
+        
     },
 
     testData: function(){
@@ -104,6 +105,7 @@ var app = {
                 <p>Total: '+totalIni+', Roll: '+result.value[1]+', Mod: '+result.value[2]+'</p>\
               </div>\
               <div class="card-content-controls">\
+                <i class="material-icons edit-btn">edit</i>\
                 <i class="material-icons cancel-btn">cancel</i>\
               </div>\
             </div>\

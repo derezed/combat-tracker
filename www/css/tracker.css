@@ -21,7 +21,10 @@
 .container .row .card .card-content .card-content-controls{
   float: right;
 }
-.container .row .card .card-content .card-content-controls .cancel-btn{
+.container .row .card .card-content .card-content-controls .edit-btn{
+  margin-right: 10px;
+}
+.container .row .card .card-content .card-content-controls .cancel-btn, .container .row .card .card-content .card-content-controls .edit-btn{
   font-size: 36px;
   margin-top: 12px;
   cursor: crosshair;

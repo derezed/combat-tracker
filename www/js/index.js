@@ -20,7 +20,7 @@ var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
-        setTimeout( this.testData,500 );
+        //setTimeout( this.testData,500 );
     },
 
     // Bind Event Listeners
@@ -112,13 +112,14 @@ var app = {
           </div>\
         </div>';
 
-      var $div = $("<div>", {'class': 'row','data-initiative': totalIni});
+      var $div = $("<div>", {'class': 'row hidden','data-initiative': totalIni});
       $div.append(playerCard);
 
-      var container = $('#cardContainer');
-      container.append($div);
+      //var container = $('#cardContainer');
+      //container.append($div);
 
-      app.shuffleCards();
+      app.addCard($div);
+      //app.shuffleCards();
     },
 
     shuffleCards: function(){
@@ -140,6 +141,13 @@ var app = {
         });
 
       }
+    },
+
+    addCard: function(elementToAdd){
+      var container = $('#cardContainer');
+      container.append(elementToAdd);
+      elementToAdd.slideDown(500).removeClass('hidden');
+      app.shuffleCards();
     },
 
     removePlayer: function(){

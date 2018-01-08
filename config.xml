@@ -2,11 +2,12 @@
 <widget id="com.trevorjarrett.combattracker" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Combat Tracker</name>
     <description>
-        A blank PhoneGap app.
+        Combat Tracker - A simple to use app to track the initiative rolls of players and NPC's in games like Starfinder, Pathfinder and Dungeons and Dragons.
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="trevor@trevorjarrett.com" href="http://trevorjarrett.com">
+        Trevor Jarrett
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <engine name="android" spec="^7.0.0" />
 </widget>

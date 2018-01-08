@@ -20,16 +20,40 @@ var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
+        //setTimeout( this.testData,500 );
     },
+
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-        var addPlayers = document.getElementsByClassName('btn-add-player')[0];
-        addPlayers.addEventListener('click', this.addPlayer, false);
+        $(document).on('deviceready',this.onDeviceReady);
+        $('nav').on('click','.btn-add-player',this.addPlayer);
+        $('#cardContainer').on('click','i.cancel-btn',this.removePlayer);
+        $('#cardContainer').on('click','i.edit-btn',this.editPlayer);
     },
+
+    testData: function(){
+      var result = {
+        value: ['Trevor','10','5']
+      };
+
+      app.createPlayerCard(result);
+
+      var result2 = {
+        value: ['Kevin','15','5']
+      };
+
+      app.createPlayerCard(result2);
+
+      var result3 = {
+        value: ['Matt','20','5']
+      };
+
+      app.createPlayerCard(result3);
+    },
+
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
@@ -37,6 +61,7 @@ var app = {
     onDeviceReady: function() {
 
     },
+
     addPlayer: function(){
       swal.setDefaults({
         input: 'text',
@@ -47,44 +72,159 @@ var app = {
 
       var steps = [
         {
-          title: 'Player or Creature Name:'
+          title: 'Player or Creature Name:',
+          input: 'text',
+          focusCancel: true,
+          onOpen: () => {
+            app.preventFocus()
+          }
         },
         {
-          title: 'Initiative Rolle:'
+          title: 'Initiative Roll:',
+          input: 'number',
+          focusCancel: true,
+          onOpen: () => {
+            app.preventFocus()
+          }
         },
         {
-          title: 'Modifier:'
+          title: 'Modifier:',
+          input: 'number',
+          focusCancel: true,
+          onOpen: () => {
+            app.preventFocus()
+          }
         }
-      ]
+      ];
 
       swal.queue(steps).then((result) => {
-        swal.resetDefaults()
+        swal.resetDefaults();
+        app.createPlayerCard(result);
+      });
+    },
 
-        if (result.value) {
-          var playerName = result.value[0];
-          var totalIni = parseInt(result.value[1]) + parseInt(result.value[2]);
+    preventFocus: function(){
+      $('.swal2-container .swal2-modal').focus();
+    },
 
-          var playerCard = '<div class="col s12 m6">\
-              <div class="card blue-grey darken-1">\
-                <div class="card-content white-text">\
-                  <div class="card-content-info">\
-                    <span class="card-title">'+result.value[0]+'</span>\
-                    <p>Total: '+totalIni+', Roll: '+result.value[1]+', Mod: '+result.value[2]+'</p>\
-                  </div>\
-                  <div class="card-content-controls">\
-                    <i class="material-icons cancel-btn">cancel</i>\
-                  </div>\
-                </div>\
+    createPlayerCard: function(result){
+      var totalIni = parseInt(result.value[1]) + parseInt(result.value[2]);
+
+      var playerCard = '<div class="col s12 m6">\
+          <div class="card blue-grey darken-1">\
+            <div class="card-content white-text">\
+              <div class="card-content-info">\
+                <span class="card-title">'+result.value[0]+'</span>\
+                <p>Total: <span class="totalIni">'+totalIni+'</span>, Roll: <span class="baseRoll">'+result.value[1]+'</span>, Mod: <span class="mod">'+result.value[2]+'</span></p>\
               </div>\
-            </div>';
+              <div class="card-content-controls">\
+                <i class="material-icons edit-btn">edit</i>\
+                <i class="material-icons cancel-btn">cancel</i>\
+              </div>\
+            </div>\
+          </div>\
+        </div>';
 
-          var div = document.createElement('div');
-          div.className = 'row';
-          div.innerHTML = playerCard;
+      var $div = $("<div>", {'class': 'row hidden','data-initiative': totalIni});
+      $div.append(playerCard);
 
-          var container = document.getElementById('cardsContainer');
-          container.appendChild(div);
+      app.addCard($div);
+    },
+
+    shuffleCards: function(){
+      var cardsToShuffle = $('.row');
+      if(cardsToShuffle.length > 1){
+        var cards = [];
+        for (var i = 0; i < cardsToShuffle.length; i++){
+          cards.push(cardsToShuffle[i]);
         }
-      })
-    }
+        cards.sort(function(a,b){
+          return b.getAttribute('data-initiative') - a.getAttribute('data-initiative');
+        });
+
+        var container = $('#cardContainer');
+        container.empty();
+
+        cards.forEach(function(el){
+          container.append(el);
+        });
+
+      }
+    },
+
+    addCard: function(elementToAdd){
+      var container = $('#cardContainer');
+      container.append(elementToAdd);
+      elementToAdd.slideDown(500).removeClass('hidden');
+      app.shuffleCards();
+    },
+
+    removePlayer: function(){
+      var playerCard = $(this).closest('.row');
+      playerCard.slideUp(500, function(){
+        $(this).remove();
+      });
+    },
+
+    editPlayer: function(){
+      var card = $(this).closest('.row');
+      var cardContentInfo = card.find('.card-content-info');
+      var player = cardContentInfo.find('.card-title').text();
+      var baseRoll = cardContentInfo.find('.baseRoll').text();
+      var mod = cardContentInfo.find('.mod').text();
+
+      swal.setDefaults({
+        input: 'text',
+        confirmButtonText: 'Next &rarr;',
+        showCancelButton: true,
+        progressSteps: ['1', '2', '3']
+      });
+
+      var steps = [
+        {
+          title: 'Player or Creature Name:',
+          input: 'text',
+          inputValue: player,
+          focusConfirm: 'true',
+          onOpen: () => {
+            app.preventFocus()
+          }
+        },
+        {
+          title: 'Initiative Roll:',
+          input: 'number',
+          inputValue: baseRoll,
+          focusConfirm: 'true',
+          onOpen: () => {
+            app.preventFocus()
+          }
+        },
+        {
+          title: 'Modifier:',
+          input: 'number',
+          inputValue: mod,
+          focusConfirm: 'true',
+          onOpen: () => {
+            app.preventFocus()
+          }
+        }
+      ];
+
+      swal.queue(steps).then((result) => {
+        swal.resetDefaults();
+        app.updatePlayerInfo(card,result);
+      });
+    },
+
+    updatePlayerInfo: function(card,result){
+      var totalIni = parseInt(result.value[1]) + parseInt(result.value[2]);
+      var cardContent = card.find('.card-content-info');
+      card.attr('data-initiative',totalIni);
+      cardContent.find('.card-title').text(result.value[0]);
+      cardContent.find('.totalIni').text(totalIni);
+      cardContent.find('.baseRoll').text(result.value[1]);
+      cardContent.find('mod').text(result.value[2]);
+
+      app.shuffleCards();
+    },
 };

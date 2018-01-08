@@ -1,9 +1,47 @@
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../css/iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url(../css/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+    url(../css/iconfontMaterialIcons-Regular.woff) format('woff'),
+    url(../css/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
 .nav-wrapper .brand-logo{
   float: left;
   left: 29%;
 }
 .container .row{
   margin-bottom: 0;
+}
+.container .row.hidden{
+  display: none;
 }
 .container .row:last-of-type{
   margin-bottom: .5rem;
@@ -21,7 +59,41 @@
 .container .row .card .card-content .card-content-controls{
   float: right;
 }
-.container .row .card .card-content .card-content-controls .cancel-btn{
+.container .row .card .card-content .card-content-controls .edit-btn{
+  margin-right: 10px;
+}
+.container .row .card .card-content .card-content-controls .cancel-btn, .container .row .card .card-content .card-content-controls .edit-btn{
   font-size: 36px;
   margin-top: 12px;
+  cursor: crosshair;
+}
+nav{
+  background-color: #3B7DDC !important;
+}
+.brand-logo{
+  color: #fff !important;
+}
+.container .row .card{
+  background-color: #3B7DDC !important;
+}
+.swal2-title, .swal2-progresscircle .swal2-activeprogressstep,.swal2-progresscircle {
+  font-family: "Roboto", sans-serif !important;
+}
+.swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep, .swal2-progressline, .swal2-progresssteps .swal2-progresscircle, .swal2-popup .swal2-styled{
+  background: #3B7DDC !important;
+}
+.swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep ~ .swal2-progressline, .swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep ~ .swal2-progresscircle, .swal2-cancel .swal2-styled{
+  background: #80A8E2 !important;
+}
+input[type=text]:not(.browser-default), input[type=number]:not(.browser-default){
+  font-size: 2rem !important;
+  font-family: "Roboto", sans-serif !important;
+}
+input[type=text]:not(.browser-default):focus:not([readonly]),input[type=number]:not(.browser-default):focus:not([readonly]){
+  border-bottom: 1px solid #18498F !important;
+  -webkit-box-shadow: 0 1px 0 0 #18498F !important;
+  box-shadow: 0 1px 0 0 #18498F !important;
+}
+.swal2-popup .swal2-input[type='number']{
+  margin: 0 auto;
 }

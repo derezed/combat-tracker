@@ -67,7 +67,7 @@ var app = {
         input: 'text',
         confirmButtonText: 'Next &rarr;',
         showCancelButton: true,
-        progressSteps: ['1', '2', '3']
+        progressSteps: ['1', '2']
       });
 
       var steps = [
@@ -81,14 +81,6 @@ var app = {
         },
         {
           title: 'Initiative Roll:',
-          input: 'number',
-          focusCancel: true,
-          onOpen: () => {
-            app.preventFocus()
-          }
-        },
-        {
-          title: 'Modifier:',
           input: 'number',
           focusCancel: true,
           onOpen: () => {
@@ -108,14 +100,13 @@ var app = {
     },
 
     createPlayerCard: function(result){
-      var totalIni = parseInt(result.value[1]) + parseInt(result.value[2]);
 
       var playerCard = '<div class="col s12 m6">\
           <div class="card blue-grey darken-1">\
             <div class="card-content white-text">\
               <div class="card-content-info">\
                 <span class="card-title">'+result.value[0]+'</span>\
-                <p>Total: <span class="totalIni">'+totalIni+'</span>, Roll: <span class="baseRoll">'+result.value[1]+'</span>, Mod: <span class="mod">'+result.value[2]+'</span></p>\
+                <p>Initiative: <span class="totalIni">'+parseInt(result.value[1])+'</span></p>\
               </div>\
               <div class="card-content-controls">\
                 <i class="material-icons edit-btn">edit</i>\
@@ -125,7 +116,7 @@ var app = {
           </div>\
         </div>';
 
-      var $div = $("<div>", {'class': 'row hidden','data-initiative': totalIni});
+      var $div = $("<div>", {'class': 'row hidden','data-initiative': parseInt(result.value[1])});
       $div.append(playerCard);
 
       app.addCard($div);
@@ -170,14 +161,13 @@ var app = {
       var card = $(this).closest('.row');
       var cardContentInfo = card.find('.card-content-info');
       var player = cardContentInfo.find('.card-title').text();
-      var baseRoll = cardContentInfo.find('.baseRoll').text();
-      var mod = cardContentInfo.find('.mod').text();
+      var initiative = cardContentInfo.find('.totalIni').text();
 
       swal.setDefaults({
         input: 'text',
         confirmButtonText: 'Next &rarr;',
         showCancelButton: true,
-        progressSteps: ['1', '2', '3']
+        progressSteps: ['1', '2']
       });
 
       var steps = [
@@ -193,16 +183,7 @@ var app = {
         {
           title: 'Initiative Roll:',
           input: 'number',
-          inputValue: baseRoll,
-          focusConfirm: 'true',
-          onOpen: () => {
-            app.preventFocus()
-          }
-        },
-        {
-          title: 'Modifier:',
-          input: 'number',
-          inputValue: mod,
+          inputValue: initiative,
           focusConfirm: 'true',
           onOpen: () => {
             app.preventFocus()
@@ -217,13 +198,11 @@ var app = {
     },
 
     updatePlayerInfo: function(card,result){
-      var totalIni = parseInt(result.value[1]) + parseInt(result.value[2]);
+      var totalIni = parseInt(result.value[1]);
       var cardContent = card.find('.card-content-info');
       card.attr('data-initiative',totalIni);
       cardContent.find('.card-title').text(result.value[0]);
       cardContent.find('.totalIni').text(totalIni);
-      cardContent.find('.baseRoll').text(result.value[1]);
-      cardContent.find('mod').text(result.value[2]);
 
       app.shuffleCards();
     },

@@ -97,3 +97,6 @@ input[type=text]:not(.browser-default):focus:not([readonly]),input[type=number]:
 .swal2-popup .swal2-input[type='number']{
   margin: 0 auto;
 }
+.swal2-popup.swal2-modal.swal2-show{
+  top: -110px;
+}
